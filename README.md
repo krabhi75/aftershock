@@ -309,7 +309,8 @@ The page's "What to submit?" list is the form. Paste-ready text is in `submissio
 | Slides | `submission/Aftershock-slides.pdf` |
 | Video | `submission/Aftershock-demo.mp4`, 2 minutes 6 seconds. Narrated. The board is on screen for at least 90 seconds |
 | Repository | https://github.com/krabhi75/aftershock |
-| Application | `python3 -m aftershock serve`, then http://127.0.0.1:8765 |
+| Application URL | https://krabhi75.github.io/aftershock/ |
+| Local board | `python3 -m aftershock serve`, then http://127.0.0.1:8765 |
 | Bob evidence | PNG consumption summaries in `bob_sessions/`, from the hackathon account |
 
 Tags: IBM Bob, Python, Developer tools, AI agents, Application maintenance.

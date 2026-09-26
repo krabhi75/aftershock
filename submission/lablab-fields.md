@@ -45,5 +45,6 @@ IBM Bob, Python, Developer tools, AI agents, Application maintenance
 - Cover image: submission/cover.png, PNG, 16:9
 - Slide presentation: submission/Aftershock-slides.pdf
 - Video: submission/Aftershock-demo.mp4, 2 minutes 6 seconds, narrated, with the board on screen for at least 90 seconds
-- Demo: the board. Local command is `python3 -m aftershock serve`, then http://127.0.0.1:8765
+- Demo application URL: https://krabhi75.github.io/aftershock/
+- Local board, same page with a live scan: `python3 -m aftershock serve`, then http://127.0.0.1:8765
 - IBM Bob task session summary screenshots in bob_sessions/, one PNG per task, from the hackathon account
