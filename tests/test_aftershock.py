@@ -216,6 +216,9 @@ class BoardTests(unittest.TestCase):
                 html = response.read().decode("utf-8")
             self.assertIn("Aftershock", html)
             self.assertIn("Scan again", html)
+            self.assertIn("The model does not decide what is still broken.", html)
+            self.assertIn("Copy task", html)
+            self.assertIn("report.json", html)
             with self.assertRaises(urllib.error.HTTPError) as caught:
                 urllib.request.urlopen(f"http://127.0.0.1:{port}/missing")
             self.assertEqual(caught.exception.code, 404)

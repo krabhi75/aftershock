@@ -1,0 +1,119 @@
+{
+  "project": "Aftershock",
+  "bobcoins": 0,
+  "duration_ms": 2.6,
+  "open_count": 8,
+  "closed_count": 3,
+  "dataset": "Original synthetic incidents and Harborline code. No personal information.",
+  "incidents": [
+    {
+      "id": "INC-1042",
+      "title": "Carrier retry marked the same parcel delivered twice",
+      "fault_class": "retry_blind_write",
+      "plain_name": "Retry wrote twice",
+      "excerpt": "On 12 March the west hub received the carrier webhook for parcel HBL-44021 twice, 90 seconds apart, because the first acknowledgement timed out. `confirm_delivery` appended the event a second time, so the parcel showed two delivery scans.",
+      "anchor": {
+        "symbol": "harborline.movement.confirm_delivery",
+        "status": "closed",
+        "file": "harborline/movement.py",
+        "line": 8
+      },
+      "open_siblings": [
+        {
+          "symbol": "harborline.movement.confirm_pickup",
+          "file": "harborline/movement.py",
+          "line": 18,
+          "fault_class": "retry_blind_write",
+          "reason": "Assigns .status and never checks applied_events or already_applied.",
+          "recommended_change": "Return early when event_id is already in parcel.applied_events, record the id, then assign status. Match confirm_delivery."
+        },
+        {
+          "symbol": "harborline.movement.release_customs_hold",
+          "file": "harborline/movement.py",
+          "line": 25,
+          "fault_class": "retry_blind_write",
+          "reason": "Assigns .status and never checks applied_events or already_applied.",
+          "recommended_change": "Return early when event_id is already in parcel.applied_events, record the id, then assign status. Match confirm_delivery."
+        },
+        {
+          "symbol": "harborline.movement.resolve_exception",
+          "file": "harborline/movement.py",
+          "line": 32,
+          "fault_class": "retry_blind_write",
+          "reason": "Assigns .status and never checks applied_events or already_applied.",
+          "recommended_change": "Return early when event_id is already in parcel.applied_events, record the id, then assign status. Match confirm_delivery."
+        }
+      ]
+    },
+    {
+      "id": "INC-1108",
+      "title": "A naive clock marked an on-time parcel late",
+      "fault_class": "naive_deadline",
+      "plain_name": "Clock forgot its timezone",
+      "excerpt": "A parcel scanned at 18:10 in a hub seven hours behind UTC was compared with `datetime.now()` and no timezone. The naive clock treated the instant as late while the parcel was still inside its promise window.",
+      "anchor": {
+        "symbol": "harborline.clocks.hub_intake_deadline",
+        "status": "closed",
+        "file": "harborline/clocks.py",
+        "line": 8
+      },
+      "open_siblings": [
+        {
+          "symbol": "harborline.clocks.linehaul_departure_deadline",
+          "file": "harborline/clocks.py",
+          "line": 25,
+          "fault_class": "naive_deadline",
+          "reason": "Calls datetime.now with no timezone.",
+          "recommended_change": "Call datetime.now(timezone.utc) instead of datetime.now() with no argument. Match hub_intake_deadline."
+        },
+        {
+          "symbol": "harborline.clocks.customer_promise_deadline",
+          "file": "harborline/clocks.py",
+          "line": 30,
+          "fault_class": "naive_deadline",
+          "reason": "Calls datetime.now with no timezone.",
+          "recommended_change": "Call datetime.now(timezone.utc) instead of datetime.now() with no argument. Match hub_intake_deadline."
+        },
+        {
+          "symbol": "harborline.clocks.hold_expiry",
+          "file": "harborline/clocks.py",
+          "line": 36,
+          "fault_class": "naive_deadline",
+          "reason": "Calls datetime.now with no timezone.",
+          "recommended_change": "Call datetime.now(timezone.utc) instead of datetime.now() with no argument. Match hub_intake_deadline."
+        }
+      ]
+    },
+    {
+      "id": "INC-1177",
+      "title": "A label was printed for a parcel that was on no manifest",
+      "fault_class": "partial_commit",
+      "plain_name": "Two writes, no rollback",
+      "excerpt": "The manifest service returned an error after the label write had already landed. Dock staff applied a label for parcel HBL-44021, and that parcel was on no truck.",
+      "anchor": {
+        "symbol": "harborline.paperwork.print_outbound_label",
+        "status": "closed",
+        "file": "harborline/paperwork.py",
+        "line": 8
+      },
+      "open_siblings": [
+        {
+          "symbol": "harborline.paperwork.book_return_leg",
+          "file": "harborline/paperwork.py",
+          "line": 20,
+          "fault_class": "partial_commit",
+          "reason": "Calls write_label, write_manifest with no unit_of_work and no compensating except.",
+          "recommended_change": "Wrap the writes in with store.unit_of_work(), as print_outbound_label does, so a failed later write rolls the earlier one back."
+        },
+        {
+          "symbol": "harborline.paperwork.reroute_mid_flight",
+          "file": "harborline/paperwork.py",
+          "line": 26,
+          "fault_class": "partial_commit",
+          "reason": "Calls write_label, write_route with no unit_of_work and no compensating except.",
+          "recommended_change": "Wrap the writes in with store.unit_of_work(), as print_outbound_label does, so a failed later write rolls the earlier one back."
+        }
+      ]
+    }
+  ]
+}

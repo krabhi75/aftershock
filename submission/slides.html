@@ -10,9 +10,10 @@
       width: 13.333in;
       height: 7.5in;
       box-sizing: border-box;
-      padding: 0.7in 0.85in;
+      padding: 0.62in 0.8in 0.55in;
       page-break-after: always;
       position: relative;
+      overflow: hidden;
     }
     section:last-child { page-break-after: auto; }
     body.shot section { display: none; }
@@ -20,61 +21,117 @@
       display: block;
       width: 1920px;
       height: 1080px;
-      padding: 88px 96px;
+      padding: 72px 88px 64px;
     }
     .kicker { letter-spacing: 0.16em; text-transform: uppercase; font-size: 16px; color: #6d6256; margin: 0 0 12px; }
     h1 {
       font-family: Palatino, Georgia, serif;
       font-weight: 500;
-      font-size: 68px;
-      line-height: 0.95;
-      margin: 0 0 22px;
+      font-size: 58px;
+      line-height: 0.98;
+      margin: 0 0 18px;
+      max-width: 16ch;
     }
-    p { font-size: 26px; line-height: 1.4; max-width: 11.2in; margin: 0 0 16px; }
-    .num { position: absolute; right: 0.85in; bottom: 0.45in; color: #6d6256; font-size: 16px; }
+    section.wide h1 { max-width: 18ch; font-size: 52px; }
+    p { font-size: 26px; line-height: 1.35; max-width: 16in; margin: 0 0 14px; }
+    .cols { display: flex; gap: 22px; margin-top: 28px; }
+    .cols article {
+      flex: 1;
+      background: #fffaf3;
+      border: 1px solid #d9cbb6;
+      padding: 22px 22px 20px;
+    }
+    .cols b {
+      display: block;
+      font-family: Palatino, Georgia, serif;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .cols h2 {
+      font-family: Palatino, Georgia, serif;
+      font-weight: 500;
+      font-size: 28px;
+      margin: 10px 0 8px;
+    }
+    .cols p { font-size: 20px; margin: 0; }
+    table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 22px; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid #d9cbb6; vertical-align: top; }
+    th { font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: #6d6256; font-weight: 600; }
+    .num { position: absolute; right: 0.8in; bottom: 0.38in; color: #6d6256; font-size: 16px; }
+    .close {
+      margin-top: 36px;
+      font-family: Palatino, Georgia, serif;
+      font-size: 36px;
+      line-height: 1.25;
+      max-width: 18ch;
+    }
   </style>
 </head>
 <body>
   <section>
-    <p class="kicker">IBM Bob 2.0 hackathon</p>
+    <p class="kicker">IBM Bob 2.0 · post-incident class closure</p>
     <h1>Aftershock</h1>
-    <p>A maintenance workflow for the bug that survives the fix. The incident ticket is closed. Sibling functions still fail the same way.</p>
-    <p>Bob reads the incident and closes that class. A local scan finds the siblings and spends 0 Bobcoins.</p>
+    <p>The ticket closed one function. The fault class is still open.</p>
+    <p>The model does not decide what is still broken. A structural scan does. IBM Bob only writes the patch.</p>
     <span class="num">1</span>
   </section>
-  <section>
-    <p class="kicker">Problem</p>
-    <h1>The patch is local. The fault is not.</h1>
-    <p>A carrier retry was fixed in delivery confirmation. Pickup, customs release, and exception handling still apply the same event twice.</p>
-    <p>The same split shows up in naive clocks and in two writes with no rollback. The next page is a sibling, not a new bug.</p>
+  <section class="wide">
+    <p class="kicker">The failure mode</p>
+    <h1>Search is the expensive part. It should not be a chat.</h1>
+    <p>Asking an agent to find similar bugs spends the context window on the repository. The list can change the next time the question is asked. The coins go to looking, not to closing.</p>
+    <p>Aftershock fixes the list before the model speaks. The same source returns the same siblings.</p>
     <span class="num">2</span>
   </section>
-  <section>
-    <p class="kicker">Product</p>
-    <h1>Name every sibling. Close the class.</h1>
-    <p>Aftershock reads the incident note, classifies the shape, and lists every function that still matches. Closed anchors stay closed.</p>
-    <p>The board is the handoff. Each open site becomes one Bob subagent task, with the file, the line, and the change.</p>
+  <section class="wide">
+    <p class="kicker">The design</p>
+    <h1>Three steps. Only one of them is a model.</h1>
+    <div class="cols">
+      <article>
+        <b>01</b>
+        <h2>Incident</h2>
+        <p>The note names the function that was fixed, and the fault class. That function is the pattern.</p>
+      </article>
+      <article>
+        <b>02</b>
+        <h2>Scan</h2>
+        <p>Python AST. Module-level functions in Harborline. Zero Bobcoins. Milliseconds.</p>
+      </article>
+      <article>
+        <b>03</b>
+        <h2>Bob</h2>
+        <p>Three subagents, one function each, one file each. The parent applies them and runs the tests once.</p>
+      </article>
+    </div>
     <span class="num">3</span>
   </section>
-  <section>
-    <p class="kicker">IBM Bob</p>
-    <h1>Bob closes. The scan only points.</h1>
-    <p>The Aftershock skill reads the incident. Agent mode runs the scanner, then three subagents write one replacement each, in parallel.</p>
-    <p>That split keeps the 40 Bobcoins on reading and patching. Search does not spend them. The rule file blocks the same shape on the next edit.</p>
+  <section class="wide">
+    <p class="kicker">Proof on Harborline</p>
+    <h1>3 anchors held. 8 siblings did not.</h1>
+    <table>
+      <thead>
+        <tr><th>Class</th><th>Closed pattern</th><th>Still open</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Retry wrote twice</td><td>confirm_delivery ignores a repeated event</td><td>pickup, customs release, exception</td></tr>
+        <tr><td>Clock forgot its timezone</td><td>hub intake stays in UTC</td><td>linehaul, customer promise, hold expiry</td></tr>
+        <tr><td>Two writes, no rollback</td><td>the label rolls back with the manifest</td><td>return leg, mid-flight reroute</td></tr>
+      </tbody>
+    </table>
     <span class="num">4</span>
   </section>
-  <section>
-    <p class="kicker">Proof on the sample</p>
-    <h1>3 anchors held. 8 siblings did not.</h1>
-    <p>Harborline is a fictional parcel hub. The incident notes are original and contain no personal data.</p>
-    <p>Tests show delivery retry is ignored, pickup retry is not, the closed clock is timezone-aware, and a failed manifest rolls back only on the closed path.</p>
+  <section class="wide">
+    <p class="kicker">The write fence</p>
+    <h1>Bob is allowed to repair. It is not allowed to search.</h1>
+    <p>Each subagent reads one function and writes closures/&lt;name&gt;.py. It does not edit Harborline. It does not run commands. It does not open the rest of the tree.</p>
+    <p>Forty Bobcoins close one class. The other siblings stay on the local board, because listing them is free.</p>
     <span class="num">5</span>
   </section>
   <section>
-    <p class="kicker">Who it is for</p>
-    <h1>Teams who close incidents.</h1>
-    <p>Application and platform engineers use it after a production fix, before the same shape ships again in another module.</p>
-    <p>Run <b>python3 -m aftershock serve</b> and open the board. One incident in Bob is enough to show the parallel close.</p>
+    <p class="kicker">Leave with this</p>
+    <h1>Close the class, not only the ticket.</h1>
+    <p class="close">Fact first. Fence the agent. Then let it write.</p>
+    <p>Harborline is fictional. The incidents are original. The scan is local. The closer is IBM Bob.</p>
     <span class="num">6</span>
   </section>
   <script>

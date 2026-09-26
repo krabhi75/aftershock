@@ -2,6 +2,10 @@
 
 Aftershock is a post-incident maintenance workflow for the [IBM Bob 2.0 hackathon](https://lablab.ai/ai-hackathons/ibm-bob-2-hackathon). An incident fix closes one function. Sibling functions still fail the same way. Aftershock names every sibling. IBM Bob closes that class in parallel.
 
+The model does not decide what is still broken. A structural scan does. Bob only writes the patch.
+
+That split is the product. A chat that is asked to "find similar bugs" spends the context window on search, and the list can change between runs. Aftershock fixes the list first. Python's `ast` module walks Harborline, matches one fault shape, and returns the same siblings every time. That step spends 0 Bobcoins. Bob then receives one function and one file to write. Three of those tasks run together. The parent applies them and runs the tests once.
+
 Public repository: https://github.com/krabhi75/aftershock
 
 The sample product is Harborline, a fictional parcel-hub library. Parcel id `HBL-44021` is made up. The three incident notes were written for this repo. They contain no personal information, no client data, no confidential data, and no text copied from a website.
@@ -274,22 +278,39 @@ From the hackathon guide, and from `DATASETS.md`:
 - No client data. No company confidential data. No personal information. No social-media data.
 - Websites used as data sources: none.
 
+## How to present it
+
+Stand on the board at http://127.0.0.1:8765 . The counts are the opening line: 3 incidents, 3 anchors that stayed closed, 8 siblings still open, 0 Bobcoins.
+
+1. Say the claim. The ticket closed delivery. Pickup, customs release, and exception handling still apply the same event twice. The scan named them. A model was not asked.
+2. Click `confirm_pickup`. Read the reason and the file and line. Point at the task box: one function, one file, no search.
+3. Click INC-1108, then INC-1177. Same method, two other shapes: a clock with no timezone, and two writes with no rollback.
+4. Say what Bob is for. One incident, three parallel subagents, then the test suite once. The other five siblings stay on this board because listing them is free.
+5. If someone asks what a regression looks like: the named fix is marked `regressed` when it matches the shape again. On this sample all three anchors are closed.
+
+Leave INC-1108 and INC-1177 unpatched in Bob. They are the proof that the scanner, not the model, is what finds the class.
+
 ## lablab submission
 
-Deadline: 27 September 2026, 15:00 UTC, which is 20:30 IST.
+Deadline on the hackathon page: 27 September 2026, 8:30 PM IST, which is 11:00 AM ET.
 
 Form: https://lablab.ai/ai-hackathons/ibm-bob-2-hackathon
+
+The page's "What to submit?" list is the form. Paste-ready text is in `submission/lablab-fields.md`.
 
 | Field | Value |
 | --- | --- |
 | Title | Aftershock |
-| Short description | Aftershock finds every sibling of a bug an incident fix left behind. IBM Bob closes that class in parallel. The search spends 0 of the 40 Bobcoins. |
-| Long description and tags | `submission/lablab-fields.md` |
+| Short description | 150 characters. In `submission/lablab-fields.md` |
+| Long description | Problem and solution statement, 366 words, under the 500-word cap |
+| IBM Bob usage statement | 281 words, under the 500-word cap. watsonx is not used |
+| Tags | IBM Bob, Python, Developer tools, AI agents, Application maintenance |
 | Cover, 1920×1080 PNG | `submission/cover.png` |
-| Slides, 6 pages | `submission/Aftershock-slides.pdf` |
-| Video, 53 seconds, MP4 | `submission/Aftershock-demo.mp4` |
+| Slides | `submission/Aftershock-slides.pdf` |
+| Video | `submission/Aftershock-demo.mp4`, 2 minutes 6 seconds. Narrated. The board is on screen for at least 90 seconds |
 | Repository | https://github.com/krabhi75/aftershock |
 | Application | `python3 -m aftershock serve`, then http://127.0.0.1:8765 |
+| Bob evidence | PNG consumption summaries in `bob_sessions/`, from the hackathon account |
 
 Tags: IBM Bob, Python, Developer tools, AI agents, Application maintenance.
 
