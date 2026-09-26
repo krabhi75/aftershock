@@ -154,7 +154,7 @@ The manifest service raised after the label write had already landed. Dock staff
 │   ├── agents/fault-critic.md     Optional. The 40-coin script does not spawn it.
 │   ├── rules/aftershock.md        Standing rule for later edits.
 │   └── rules-aftershock/          Instructions loaded only in Aftershock mode.
-├── bob_sessions/        Put real Bob consumption-summary PNGs here.
+├── bob_sessions/        Real Bob consumption-summary PNGs from the two DEMO tasks.
 ├── submission/          lablab cover, slides, video, and paste-ready fields.
 ├── DEMO.md              The two Bob prompts.
 ├── DATASETS.md          What the data is and what it is not.
@@ -254,7 +254,7 @@ Screenshot path inside Bob: Tasks → open the task → click the task header �
 - `bob_sessions/aftershock_task01_read_incident_summary.png`
 - `bob_sessions/aftershock_task02_parallel_siblings_summary.png`
 
-This repository does not contain stand-in screenshots. The September guide requires the real consumption summary from the hackathon account.
+The two PNGs in `bob_sessions/` are the consumption summaries from IBM Bob on this machine. Task 1 used 0.031 Bobcoins. Task 2 used 0.668 Bobcoins and shows the three parallel sibling tasks. They are not stand-ins.
 
 ## Tests
 

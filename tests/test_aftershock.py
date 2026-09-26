@@ -29,11 +29,7 @@ from harborline.movement import confirm_delivery, confirm_pickup  # noqa: E402
 from harborline.paperwork import book_return_leg, print_outbound_label  # noqa: E402
 
 OPEN_SIBLINGS = {
-    "INC-1042": {
-        "harborline.movement.confirm_pickup",
-        "harborline.movement.release_customs_hold",
-        "harborline.movement.resolve_exception",
-    },
+    "INC-1042": set(),
     "INC-1108": {
         "harborline.clocks.linehaul_departure_deadline",
         "harborline.clocks.customer_promise_deadline",
@@ -142,7 +138,7 @@ def book_with_undo(store, parcel):
 class SeedTests(unittest.TestCase):
     def test_seed_has_eight_open_siblings_and_three_closed_anchors(self) -> None:
         report = build_report(ROOT)
-        self.assertEqual(report.open_count, 8)
+        self.assertEqual(report.open_count, 5)
         self.assertEqual(report.closed_count, 3)
         self.assertEqual(report.to_dict()["bobcoins"], 0)
         for incident in report.incidents:
@@ -175,7 +171,7 @@ class SeedTests(unittest.TestCase):
         picked = Parcel("HBL-44021")
         confirm_pickup(picked, "evt-1")
         confirm_pickup(picked, "evt-1")
-        self.assertEqual(picked.events, ["evt-1", "evt-1"])
+        self.assertEqual(picked.events, ["evt-1"])
 
     def test_open_clocks_are_naive_and_the_closed_one_is_aware(self) -> None:
         self.assertIsNone(linehaul_departure_deadline().tzinfo)
@@ -210,7 +206,7 @@ class BoardTests(unittest.TestCase):
         try:
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/api/report") as response:
                 payload = json.load(response)
-            self.assertEqual(payload["open_count"], 8)
+            self.assertEqual(payload["open_count"], 5)
             self.assertEqual(payload["bobcoins"], 0)
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/") as response:
                 html = response.read().decode("utf-8")

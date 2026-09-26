@@ -33,7 +33,7 @@ The instructions Bob loads are in this repository: .bob/skills/aftershock/SKILL.
 
 This project does not use IBM watsonx.ai or IBM watsonx Orchestrate.
 
-The task-session consumption summaries for those two tasks are saved as PNG files in bob_sessions/, captured from the hackathon IBM Bob account in us-east. The repository does not contain stand-in screenshots.
+The task prompts are in DEMO.md. Consumption-summary screenshots are taken from the hackathon IBM Bob account in us-east after those two tasks and placed in bob_sessions/. The repository does not contain stand-in screenshots.
 
 ## Technology and category tags
 
