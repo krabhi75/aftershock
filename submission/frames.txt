@@ -1,0 +1,15 @@
+file 'cover.png'
+duration 5
+file 'frame-slide-1.png'
+duration 6
+file 'frame-slide-2.png'
+duration 6
+file 'frame-slide-4.png'
+duration 6
+file 'frame-board.png'
+duration 8
+file 'frame-siblings.png'
+duration 8
+file 'frame-slide-5.png'
+duration 6
+file 'frame-slide-5.png'

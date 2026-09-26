@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Aftershock slides</title>
+  <style>
+    @page { size: 13.333in 7.5in; margin: 0; }
+    html, body { margin: 0; background: #f3ecdf; color: #211911; font-family: "Avenir Next", "Segoe UI", sans-serif; }
+    section {
+      width: 13.333in;
+      height: 7.5in;
+      box-sizing: border-box;
+      padding: 0.7in 0.85in;
+      page-break-after: always;
+      position: relative;
+    }
+    section:last-child { page-break-after: auto; }
+    body.shot section { display: none; }
+    body.shot section.on {
+      display: block;
+      width: 1920px;
+      height: 1080px;
+      padding: 88px 96px;
+    }
+    .kicker { letter-spacing: 0.16em; text-transform: uppercase; font-size: 16px; color: #6d6256; margin: 0 0 12px; }
+    h1 {
+      font-family: Palatino, Georgia, serif;
+      font-weight: 500;
+      font-size: 68px;
+      line-height: 0.95;
+      margin: 0 0 22px;
+    }
+    p { font-size: 26px; line-height: 1.4; max-width: 11.2in; margin: 0 0 16px; }
+    .num { position: absolute; right: 0.85in; bottom: 0.45in; color: #6d6256; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <section>
+    <p class="kicker">IBM Bob 2.0 hackathon</p>
+    <h1>Aftershock</h1>
+    <p>A maintenance workflow for the bug that survives the fix. The incident ticket is closed. Sibling functions still fail the same way.</p>
+    <p>Bob reads the incident and closes that class. A local scan finds the siblings and spends 0 Bobcoins.</p>
+    <span class="num">1</span>
+  </section>
+  <section>
+    <p class="kicker">Problem</p>
+    <h1>The patch is local. The fault is not.</h1>
+    <p>A carrier retry was fixed in delivery confirmation. Pickup, customs release, and exception handling still apply the same event twice.</p>
+    <p>The same split shows up in naive clocks and in two writes with no rollback. The next page is a sibling, not a new bug.</p>
+    <span class="num">2</span>
+  </section>
+  <section>
+    <p class="kicker">Product</p>
+    <h1>Name every sibling. Close the class.</h1>
+    <p>Aftershock reads the incident note, classifies the shape, and lists every function that still matches. Closed anchors stay closed.</p>
+    <p>The board is the handoff. Each open site becomes one Bob subagent task, with the file, the line, and the change.</p>
+    <span class="num">3</span>
+  </section>
+  <section>
+    <p class="kicker">IBM Bob</p>
+    <h1>Bob closes. The scan only points.</h1>
+    <p>The Aftershock skill reads the incident. Agent mode runs the scanner, then three subagents write one replacement each, in parallel.</p>
+    <p>That split keeps the 40 Bobcoins on reading and patching. Search does not spend them. The rule file blocks the same shape on the next edit.</p>
+    <span class="num">4</span>
+  </section>
+  <section>
+    <p class="kicker">Proof on the sample</p>
+    <h1>3 anchors held. 8 siblings did not.</h1>
+    <p>Harborline is a fictional parcel hub. The incident notes are original and contain no personal data.</p>
+    <p>Tests show delivery retry is ignored, pickup retry is not, the closed clock is timezone-aware, and a failed manifest rolls back only on the closed path.</p>
+    <span class="num">5</span>
+  </section>
+  <section>
+    <p class="kicker">Who it is for</p>
+    <h1>Teams who close incidents.</h1>
+    <p>Application and platform engineers use it after a production fix, before the same shape ships again in another module.</p>
+    <p>Run <b>python3 -m aftershock serve</b> and open the board. One incident in Bob is enough to show the parallel close.</p>
+    <span class="num">6</span>
+  </section>
+  <script>
+    const shot = new URLSearchParams(location.search).get("shot");
+    if (shot) {
+      document.body.classList.add("shot");
+      const sections = document.querySelectorAll("section");
+      const index = Math.max(0, Math.min(sections.length - 1, Number(shot) - 1));
+      sections[index].classList.add("on");
+    }
+  </script>
+</body>
+</html>

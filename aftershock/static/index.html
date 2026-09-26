@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aftershock</title>
+  <style>
+    :root {
+      --paper: #f3ecdf;
+      --ink: #211911;
+      --muted: #6d6256;
+      --line: #d9cbb6;
+      --closed: #1f6b45;
+      --retry: #9a3412;
+      --clock: #1d4e89;
+      --partial: #9f1239;
+      --card: #fffaf3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+    header, main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    header { padding: 28px 0 8px; }
+    .kicker {
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0 0 8px;
+    }
+    h1 {
+      font-family: Palatino, "Iowan Old Style", Georgia, serif;
+      font-weight: 500;
+      font-size: 64px;
+      line-height: 0.9;
+      margin: 0;
+    }
+    .lede { max-width: 62ch; font-size: 18px; margin: 14px 0 0; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 22px 0;
+    }
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 12px 14px 10px;
+    }
+    .stat b {
+      display: block;
+      font-family: Palatino, Georgia, serif;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .stat span { color: var(--muted); font-size: 13px; }
+    .toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+    button, .chip {
+      border: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+    button[aria-pressed="true"], .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+    button:focus-visible, .core button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+    .meta { color: var(--muted); font-size: 13px; }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin: 10px 0 0; color: var(--muted); font-size: 13px; }
+    .swatch { display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; }
+    .core {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 14px;
+      background: #2a211b;
+      min-height: 92px;
+    }
+    .core button {
+      border: 0;
+      color: #fffaf3;
+      min-width: 88px;
+      min-height: 64px;
+      text-align: left;
+      padding: 8px;
+      font-size: 12px;
+      line-height: 1.3;
+    }
+    .core button small { display: block; opacity: 0.8; font-size: 11px; }
+    .retry { background: var(--retry); }
+    .clock { background: var(--clock); }
+    .partial { background: var(--partial); }
+    .closed-site { background: var(--closed); }
+    .layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+      margin: 18px 0 40px;
+    }
+    article, aside {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 16px 18px 18px;
+    }
+    h2 { font-family: Palatino, Georgia, serif; font-weight: 500; font-size: 28px; margin: 0 0 8px; }
+    .excerpt { margin-top: 0; }
+    .sibling { border-top: 1px solid var(--line); padding: 10px 0; }
+    .sibling h3 { margin: 0; font-size: 15px; }
+    .where { color: var(--muted); font-size: 13px; font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; }
+    label { display: block; font-size: 13px; color: var(--muted); margin-top: 8px; }
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      margin-top: 6px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      font: 13px/1.4 ui-monospace, Menlo, monospace;
+      padding: 10px;
+      resize: vertical;
+    }
+    footer { width: min(1120px, calc(100% - 32px)); margin: 0 auto 32px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) {
+      h1 { font-size: 46px; }
+      .stats, .layout { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="kicker">Post-incident class closure</p>
+    <h1>Aftershock</h1>
+    <p class="lede">The incident ticket is already closed. The same fault shape is still in the sibling functions. This board names every one of them. The search runs locally and spends 0 Bobcoins.</p>
+    <section class="stats" aria-label="Scan totals">
+      <div class="stat"><b id="incident-count">—</b><span>incidents</span></div>
+      <div class="stat"><b id="closed-count">—</b><span>anchors stayed closed</span></div>
+      <div class="stat"><b id="open-count">—</b><span>siblings still open</span></div>
+      <div class="stat"><b id="coin-count">0</b><span>Bobcoins for the scan</span></div>
+    </section>
+    <div class="toolbar">
+      <button type="button" id="show-all" data-incident="all" aria-pressed="true">All classes</button>
+      <button type="button" id="rescan">Scan again</button>
+      <span class="meta" id="timing"></span>
+    </div>
+    <p class="legend">
+      <span><i class="swatch closed-site"></i>closed anchor</span>
+      <span><i class="swatch retry"></i>retry wrote twice</span>
+      <span><i class="swatch clock"></i>clock forgot its timezone</span>
+      <span><i class="swatch partial"></i>two writes, no rollback</span>
+    </p>
+    <div class="core" id="core" aria-label="Fault sites"></div>
+  </header>
+  <main class="layout">
+    <article>
+      <h2 id="detail-title">Select a site</h2>
+      <p class="excerpt" id="detail-body">The core sample lists every closed anchor and every open sibling.</p>
+      <div id="sibling-list"></div>
+    </article>
+    <aside>
+      <h2>Hand one sibling to Bob</h2>
+      <p id="prompt-help">Choose an open sibling. Paste this into IBM Bob, Agent mode, on the hackathon account.</p>
+      <label for="prompt">Subagent task</label>
+      <textarea id="prompt" readonly>Select an open sibling to build its Bob task.</textarea>
+    </aside>
+  </main>
+  <footer id="dataset"></footer>
+  <script>
+    const core = document.getElementById("core");
+    const list = document.getElementById("sibling-list");
+    const prompt = document.getElementById("prompt");
+    let report = null;
+    let selected = new URLSearchParams(location.search).get("incident") || "all";
+
+    function pad(value) {
+      return String(value).padStart(2, "0");
+    }
+
+    function taskFor(incident, sibling) {
+      return [
+        "Confirm one open Aftershock sibling by reading only that function.",
+        "Symbol: " + sibling.symbol,
+        "File: " + sibling.file + ":" + sibling.line,
+        "Write only closures/" + sibling.symbol.split(".").pop() + ".py",
+        "Do not edit harborline or tests. Do not run commands. Do not read any other file.",
+        "Replacement: " + sibling.recommended_change
+      ].join("\n");
+    }
+
+    function renderSites() {
+      core.replaceChildren();
+      const incidents = report.incidents.filter(function (incident) {
+        return selected === "all" || incident.id === selected;
+      });
+      incidents.forEach(function (incident) {
+        const anchor = document.createElement("button");
+        anchor.type = "button";
+        anchor.className = "closed-site";
+        anchor.innerHTML = "<small>" + incident.id + " closed</small>" + incident.anchor.symbol.split(".").pop();
+        anchor.addEventListener("click", function () { showIncident(incident, null); });
+        core.appendChild(anchor);
+        incident.open_siblings.forEach(function (sibling) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = incident.fault_class === "retry_blind_write" ? "retry"
+            : incident.fault_class === "naive_deadline" ? "clock" : "partial";
+          button.innerHTML = "<small>open</small>" + sibling.symbol.split(".").pop();
+          button.addEventListener("click", function () { showIncident(incident, sibling); });
+          core.appendChild(button);
+        });
+      });
+    }
+
+    function showIncident(incident, sibling) {
+      document.getElementById("detail-title").textContent = incident.id + " — " + incident.plain_name;
+      document.getElementById("detail-body").textContent = incident.excerpt;
+      list.replaceChildren();
+      incident.open_siblings.forEach(function (item) {
+        const block = document.createElement("div");
+        block.className = "sibling";
+        const title = document.createElement("h3");
+        title.textContent = item.symbol;
+        const where = document.createElement("div");
+        where.className = "where";
+        where.textContent = item.file + ":" + item.line;
+        const reason = document.createElement("p");
+        reason.textContent = item.reason;
+        block.append(title, where, reason);
+        list.appendChild(block);
+      });
+      prompt.value = sibling ? taskFor(incident, sibling) : "Select an open sibling to build its Bob task.";
+    }
+
+    function setPressed(id) {
+      document.querySelectorAll(".toolbar button").forEach(function (button) {
+        button.setAttribute("aria-pressed", button.dataset.incident === id ? "true" : "false");
+      });
+    }
+
+    function choose(id) {
+      selected = id;
+      setPressed(id);
+      renderSites();
+      if (id === "all") {
+        const first = report.incidents[0];
+        if (first) showIncident(first, first.open_siblings[0] || null);
+        return;
+      }
+      const incident = report.incidents.find(function (item) { return item.id === id; });
+      if (incident) showIncident(incident, incident.open_siblings[0] || null);
+    }
+
+    function renderFilters() {
+      document.querySelectorAll(".toolbar button[data-incident]:not(#show-all)").forEach(function (button) {
+        button.remove();
+      });
+      const rescan = document.getElementById("rescan");
+      report.incidents.forEach(function (incident) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.incident = incident.id;
+        button.textContent = incident.id;
+        button.addEventListener("click", function () { choose(incident.id); });
+        rescan.before(button);
+      });
+      setPressed(selected);
+    }
+
+    function render(next) {
+      report = next;
+      document.getElementById("incident-count").textContent = pad(report.incidents.length);
+      document.getElementById("closed-count").textContent = pad(report.closed_count);
+      document.getElementById("open-count").textContent = pad(report.open_count);
+      document.getElementById("coin-count").textContent = String(report.bobcoins);
+      document.getElementById("timing").textContent = "Scanned in " + report.duration_ms + " ms";
+      document.getElementById("dataset").textContent = report.dataset;
+      renderFilters();
+      choose(selected);
+    }
+
+    async function load() {
+      document.getElementById("timing").textContent = "Scanning…";
+      const response = await fetch("/api/report", { cache: "no-store" });
+      if (!response.ok) throw new Error("scan failed");
+      render(await response.json());
+    }
+
+    document.getElementById("rescan").addEventListener("click", function () {
+      load().catch(function (error) {
+        document.getElementById("timing").textContent = error.message;
+      });
+    });
+
+    document.getElementById("show-all").addEventListener("click", function () {
+      choose("all");
+    });
+
+    load().catch(function (error) {
+      document.getElementById("detail-body").textContent = error.message;
+    });
+  </script>
+</body>
+</html>
